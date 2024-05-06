@@ -3,6 +3,7 @@ package africa.semicolon.todolist.services;
 import africa.semicolon.todolist.data.model.User;
 import africa.semicolon.todolist.data.repository.UserRepository;
 import africa.semicolon.todolist.dtos.SignUpRequest;
+import africa.semicolon.todolist.responses.SignUpResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

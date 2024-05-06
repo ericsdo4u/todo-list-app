@@ -2,6 +2,7 @@ package africa.semicolon.todolist.controller;
 
 import africa.semicolon.todolist.dtos.SignUpRequest;
 import africa.semicolon.todolist.exceptions.TodoListException;
+import africa.semicolon.todolist.responses.ApiResponse;
 import africa.semicolon.todolist.services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

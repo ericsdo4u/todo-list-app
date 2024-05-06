@@ -1,4 +1,4 @@
-package africa.semicolon.todolist.services;
+package africa.semicolon.todolist.responses;
 
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;

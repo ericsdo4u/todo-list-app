@@ -1,4 +1,4 @@
-package africa.semicolon.todolist.controller;
+package africa.semicolon.todolist.responses;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

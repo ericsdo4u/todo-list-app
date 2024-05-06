@@ -2,7 +2,7 @@ package africa.semicolon.todolist.mapper;
 
 import africa.semicolon.todolist.data.model.User;
 import africa.semicolon.todolist.dtos.SignUpRequest;
-import africa.semicolon.todolist.services.SignUpResponse;
+import africa.semicolon.todolist.responses.SignUpResponse;
 
 public class MapperClass {
 
