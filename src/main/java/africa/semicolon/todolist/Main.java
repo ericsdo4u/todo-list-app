@@ -1,4 +1,4 @@
-package africa.semicolon;
+package africa.semicolon.todolist;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
