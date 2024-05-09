@@ -1,5 +1,6 @@
 package africa.semicolon.todolist.controller;
 
+import africa.semicolon.todolist.dtos.LoginRequest;
 import africa.semicolon.todolist.dtos.SignUpRequest;
 import africa.semicolon.todolist.exceptions.TodoListException;
 import africa.semicolon.todolist.responses.ApiResponse;
@@ -27,6 +28,15 @@ public class Controller {
             return new ResponseEntity<>(new ApiResponse(true, result), CREATED);
         }catch (TodoListException exception){
             return new ResponseEntity<>(new ApiResponse(false, exception.getMessage()), BAD_REQUEST);
+        }
+    }
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginRequest request){
+        try {
+            var result = userService.login(request);
+            return new ResponseEntity<>(new ApiResponse(true, result), CREATED);
+        }catch (TodoListException e) {
+            return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), BAD_REQUEST);
         }
     }
 }

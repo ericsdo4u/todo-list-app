@@ -1,15 +1,14 @@
 package africa.semicolon.todolist.data.repository;
 
-import africa.semicolon.todolist.data.model.User;
+import africa.semicolon.todolist.data.model.Task;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends MongoRepository<User, String> {
-    Optional<User> findByUsername(String username);
+public interface TaskRepository extends MongoRepository<Task, String> {
 
-    User findUserBy(String username);
+    Optional<Task> findByUsername(String username);
 
 }

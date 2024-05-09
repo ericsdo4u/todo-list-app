@@ -1,8 +1,16 @@
 package africa.semicolon.todolist.mapper;
 
+import africa.semicolon.todolist.data.model.Task;
 import africa.semicolon.todolist.data.model.User;
+import africa.semicolon.todolist.dtos.CreateTaskRequest;
 import africa.semicolon.todolist.dtos.SignUpRequest;
+import africa.semicolon.todolist.exceptions.UserAccountIsLockException;
+import africa.semicolon.todolist.responses.CreateTaskResponse;
 import africa.semicolon.todolist.responses.SignUpResponse;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 
 public class MapperClass {
 
@@ -13,12 +21,39 @@ public class MapperClass {
         user.setUserId(request.getUserId());
         return user;
     }
-
     public static SignUpResponse signUpResponseMapper(User user){
         SignUpResponse response = new SignUpResponse();
-        response.setUsername(user.getUsername());
         response.setUserId(user.getUserId());
         response.setMessage("you successfully signed up");
         return response;
+    }
+
+    public static Task mapCreateTask(CreateTaskRequest request){
+        Task task = new Task();
+        task.setTaskId(request.getTaskId());
+        task.setUsername(request.getUsername());
+        task.setTaskName(request.getTaskName());
+        task.setTaskDetail(request.getTaskDetail());
+        task.setDuration(request.getDuration());
+        task.setStartTime(LocalDateTime.now());//(DateTimeFormatter.ofPattern("dd/MM/yyyy 'at' HH:mm:ss a").format(request.getStartTime()));
+        task.setStopTime(LocalDateTime.now());//(DateTimeFormatter.ofPattern("dd/MM/yyyy 'at' HH:mm:ss a").format(request.getStopTime()));
+        return task;
+    }
+    public static CreateTaskResponse mapTaskResponse(Task task) {
+        CreateTaskResponse response = new CreateTaskResponse();
+        response.setTaskId(response.getTaskId());
+        response.setStartTime(DateTimeFormatter.ofPattern("dd/MM/yyyy 'at' HH:mm:ss a").format(task.getStartTime()));
+        response.setStopTime(DateTimeFormatter.ofPattern("dd/MM/yyyy 'at' HH:mm:ss a").format(task.getStopTime()));
+        response.setMessage("task created");
+        return response;
+    }
+
+    public static void checkState(User user){
+        if (user.isLock()){
+            throw new UserAccountIsLockException("account is locked, please login to access your account");
+        }
+    }
+    public static boolean isPasswordIncorrect(User user, String password){
+        return  (!user.getPassword().equals(password));
     }
 }

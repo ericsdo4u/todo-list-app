@@ -1,19 +1,21 @@
-package africa.semicolon.todolist.data.model;
+package africa.semicolon.todolist.responses;
 
+import africa.semicolon.todolist.enum_classes.Priority;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import java.time.LocalDateTime;
 
 @Data
-@Document("task")
-public class Task {
+@Document
+public class CreateTaskResponse {
     @Id
     private String taskId;
     private String username;
     private String taskName;
     private String taskDetail;
-    private LocalDateTime startTime = LocalDateTime.now();
-    private LocalDateTime stopTime = LocalDateTime.now();
+    private String startTime;
+    private String stopTime;
     private String duration;
+    private Priority priority;
+    private String message;
 }

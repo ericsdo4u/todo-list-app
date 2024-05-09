@@ -1,12 +1,11 @@
-package africa.semicolon.todolist.responses;
+package africa.semicolon.todolist.dtos;
 
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
 @Document
-public class SignUpResponse {
+public class LoginRequest {
     private String username;
-    private String userId;
-    private String message;
+    private String password;
 }
