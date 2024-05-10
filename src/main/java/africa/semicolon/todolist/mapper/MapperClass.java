@@ -30,7 +30,7 @@ public class MapperClass {
 
     public static Task mapCreateTask(CreateTaskRequest request){
         Task task = new Task();
-        task.setTaskId(request.getTaskId());
+      //  task.setTaskId(request.getTaskId());
         task.setUsername(request.getUsername());
         task.setTaskName(request.getTaskName());
         task.setTaskDetail(request.getTaskDetail());
@@ -42,6 +42,9 @@ public class MapperClass {
     public static CreateTaskResponse mapTaskResponse(Task task) {
         CreateTaskResponse response = new CreateTaskResponse();
         response.setTaskId(response.getTaskId());
+        response.setTaskName(task.getTaskName());
+        response.setUsername(task.getUsername());
+        response.setTaskDetail(task.getTaskDetail());
         response.setStartTime(DateTimeFormatter.ofPattern("dd/MM/yyyy 'at' HH:mm:ss a").format(task.getStartTime()));
         response.setStopTime(DateTimeFormatter.ofPattern("dd/MM/yyyy 'at' HH:mm:ss a").format(task.getStopTime()));
         response.setMessage("task created");

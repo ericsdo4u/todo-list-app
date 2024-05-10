@@ -17,5 +17,7 @@ public interface TaskService {
 
     void validateTask(String taskId);
 
-    List<Task> findListOfTask(String task);
+    List<Task> findListOfTask(String username);
+
+    List<Task> findAllTask();
 }

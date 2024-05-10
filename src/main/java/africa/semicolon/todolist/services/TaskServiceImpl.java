@@ -42,19 +42,18 @@ public class TaskServiceImpl implements TaskService{
     }
     @Override
     public CreateTaskResponse editTask(CreateTaskRequest request){
-        Optional<Task> foundTask = taskRepository.findByUsername(request.getUsername());
+        Optional<Task> foundTask = taskRepository.findByTaskName(request.getTaskName());
         if (foundTask.isEmpty()) {
             throw new TaskDoesNotExistException("task not found");
         }
-        validateTask(request.getTaskName());
         Task existingTask = foundTask.get();
-        existingTask.setTaskId(request.getTaskId());
+       // existingTask.setTaskId(request.getTaskId());
         existingTask.setUsername(request.getUsername());
         existingTask.setTaskName(request.getTaskName());
         existingTask.setTaskDetail(request.getTaskDetail());
-        existingTask.setDuration(request.getDuration());
-        taskRepository.save(existingTask);
-        return mapTaskResponse(existingTask);
+       // existingTask.setDuration(request.getDuration());
+        Task editedTask = taskRepository.save(existingTask);
+        return mapTaskResponse(editedTask);
     }
     @Override
     public long getNumberOfTaskCreated() {
@@ -62,15 +61,22 @@ public class TaskServiceImpl implements TaskService{
     }
 
     @Override
-    public void validateTask(String taskId){
-        Optional<Task> foundPost = taskRepository.findById(taskId);
+    public void validateTask(String taskName){
+        Optional<Task> foundPost = taskRepository.findByTaskName(taskName);
         if (foundPost.isPresent()){
             throw new Status.TaskAlreadyExistException("task with this id exist already, please login");
         }
     }
-
     @Override
-    public List<Task> findListOfTask(String task) {
-        return null;
+    public List<Task> findListOfTask(String userName) {
+        List<Task> foundTask = taskRepository.findTaskByUsername(userName);
+        if (foundTask.isEmpty()){
+            throw new TaskDoesNotExistException("no task with this username");
+        }
+        return foundTask;
+    }
+    @Override
+    public List<Task> findAllTask() {
+        return taskRepository.findAll();
     }
 }
