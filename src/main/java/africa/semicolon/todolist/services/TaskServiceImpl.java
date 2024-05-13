@@ -9,6 +9,7 @@ import africa.semicolon.todolist.enum_classes.Status;
 import africa.semicolon.todolist.exceptions.TaskDoesNotExistException;
 import africa.semicolon.todolist.exceptions.UserNotFoundExcetion;
 import africa.semicolon.todolist.responses.CreateTaskResponse;
+import africa.semicolon.todolist.responses.DeleteResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,18 +43,19 @@ public class TaskServiceImpl implements TaskService{
     }
     @Override
     public CreateTaskResponse editTask(CreateTaskRequest request){
-        Optional<Task> foundTask = taskRepository.findByTaskName(request.getTaskName());
+        Optional<Task> foundTask = taskRepository.findTaskByTaskId(request.getTaskId());
         if (foundTask.isEmpty()) {
             throw new TaskDoesNotExistException("task not found");
         }
         Task existingTask = foundTask.get();
-       // existingTask.setTaskId(request.getTaskId());
+        existingTask.setTaskId(request.getTaskId());
         existingTask.setUsername(request.getUsername());
         existingTask.setTaskName(request.getTaskName());
         existingTask.setTaskDetail(request.getTaskDetail());
        // existingTask.setDuration(request.getDuration());
         Task editedTask = taskRepository.save(existingTask);
-        return mapTaskResponse(editedTask);
+
+        return mapTaskEditedResponse(editedTask);
     }
     @Override
     public long getNumberOfTaskCreated() {
@@ -78,5 +80,26 @@ public class TaskServiceImpl implements TaskService{
     @Override
     public List<Task> findAllTask() {
         return taskRepository.findAll();
+    }
+
+    @Override
+    public Optional<Task> findTaskByTaskName(String taskName) {
+        Optional<Task> foundTask = taskRepository.findByTaskName(taskName);
+        if (foundTask.isEmpty()){
+            throw new TaskDoesNotExistException("task not found");
+        }
+        //taskRepository.save(foundTask.get());
+        return foundTask;
+    }
+    @Override
+    public DeleteResponse deleteTask(String taskId){
+        Optional<Task> foundTask = taskRepository.findTaskByTaskId(taskId);
+        if (foundTask.isEmpty()){
+            throw new TaskDoesNotExistException("post not found");
+        }
+        taskRepository.delete(foundTask.get());
+        DeleteResponse response = new DeleteResponse();
+        response.setMessage("task deleted");
+        return response;
     }
 }

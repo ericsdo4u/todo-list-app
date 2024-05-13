@@ -8,5 +8,5 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class SignUpRequest {
     private String username;
     private String password;
-    private String userId;
+    //private String userId;
 }

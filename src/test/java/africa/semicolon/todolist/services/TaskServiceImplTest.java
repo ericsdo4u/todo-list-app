@@ -1,7 +1,6 @@
 package africa.semicolon.todolist.services;
 
 import africa.semicolon.todolist.data.model.Task;
-import africa.semicolon.todolist.data.model.User;
 import africa.semicolon.todolist.data.repository.TaskRepository;
 import africa.semicolon.todolist.data.repository.UserRepository;
 import africa.semicolon.todolist.dtos.CreateTaskRequest;
@@ -15,7 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 
 import java.util.List;
-
+import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -116,5 +115,37 @@ class TaskServiceImplTest {
         System.out.println(createTaskResponse1);
         List<Task> getTask = taskService.findAllTask();
         assertEquals(getTask, taskService.findAllTask());
+    }
+
+    @Test
+    public void testFindAllTaskByUsername() {
+
+        SignUpRequest request = new SignUpRequest();
+        request.setUsername("dondd");
+        request.setPassword("1234");
+        userService.signUp(request);
+
+        LoginRequest request2 = new LoginRequest();
+        request2.setUsername("dondd");
+        request2.setPassword("1234");
+        userService.login(request2);
+
+        CreateTaskRequest request1 = new CreateTaskRequest();
+        request1.setUsername("dondd");
+        request1.setTaskName("read");
+        request1.setTaskDetail("js text book chapter 7");
+        CreateTaskResponse createTaskResponse = taskService.createTask(request1);
+        System.out.println(createTaskResponse);
+
+
+        CreateTaskRequest request0 = new CreateTaskRequest();
+        request0.setUsername("dondd");
+        request0.setTaskName("readd");
+        request0.setTaskDetail("js text book chapter 7");
+        CreateTaskResponse createTaskResponse1 = taskService.createTask(request0);
+        System.out.println(createTaskResponse1);
+        Optional<Task> getTask = taskService.findTaskByTaskName("readd");
+        assertTrue(getTask.isPresent());
+        assertEquals("readd", getTask.get().getTaskName());
     }
 }

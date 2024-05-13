@@ -18,7 +18,7 @@ public class MapperClass {
         User user = new User();
         user.setUsername(request.getUsername());
         user.setPassword(request.getPassword());
-        user.setUserId(request.getUserId());
+        //user.setUserId(request.getUserId());
         return user;
     }
     public static SignUpResponse signUpResponseMapper(User user){
@@ -49,6 +49,18 @@ public class MapperClass {
         response.setStopTime(DateTimeFormatter.ofPattern("dd/MM/yyyy 'at' HH:mm:ss a").format(task.getStopTime()));
         response.setMessage("task created");
         return response;
+    }
+
+    public static CreateTaskResponse mapTaskEditedResponse(Task task) {
+        CreateTaskResponse taskResponse = new CreateTaskResponse();
+        taskResponse.setTaskId(taskResponse.getTaskId());
+        taskResponse.setTaskName(task.getTaskName());
+        taskResponse.setUsername(task.getUsername());
+        taskResponse.setTaskDetail(task.getTaskDetail());
+        taskResponse.setStartTime(DateTimeFormatter.ofPattern("dd/MM/yyyy 'at' HH:mm:ss a").format(task.getStartTime()));
+        taskResponse.setStopTime(DateTimeFormatter.ofPattern("dd/MM/yyyy 'at' HH:mm:ss a").format(task.getStopTime()));
+        taskResponse.setMessage("task edited");
+        return taskResponse;
     }
 
     public static void checkState(User user){

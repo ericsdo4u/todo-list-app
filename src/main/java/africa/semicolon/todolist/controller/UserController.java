@@ -10,6 +10,7 @@ import africa.semicolon.todolist.services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,7 +37,7 @@ public class UserController {
         }
     }
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest request){
+    public ResponseEntity<?> signIn(@RequestBody LoginRequest request){
         try {
             var result = userService.login(request);
             return new ResponseEntity<>(new ApiResponse(true, result), CREATED);
@@ -50,6 +51,15 @@ public class UserController {
         try {
             var result = taskService.editTask(request);
             return new ResponseEntity<>(new ApiResponse(true, result),CREATED);
+        }catch (TodoListException e){
+            return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), BAD_REQUEST);
+        }
+    }
+    @GetMapping("/find-all-task")
+    public ResponseEntity<?> findAll(){
+        try {
+            var result = taskService.findAllTask();
+            return new ResponseEntity<>(new ApiResponse(true, result), CREATED);
         }catch (TodoListException e){
             return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), BAD_REQUEST);
         }
