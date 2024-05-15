@@ -15,7 +15,7 @@ public class CreateTaskResponse {
     private String taskDetail;
     private String startTime;
     private String stopTime;
-    private String duration;
-    private Priority priority;
-    private String message;
+   // private String duration;
+//    private Priority priority;
+//    private String message;
 }

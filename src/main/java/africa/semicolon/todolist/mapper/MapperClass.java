@@ -27,40 +27,26 @@ public class MapperClass {
         response.setMessage("you successfully signed up");
         return response;
     }
-
     public static Task mapCreateTask(CreateTaskRequest request){
         Task task = new Task();
-      //  task.setTaskId(request.getTaskId());
+        //task.setTaskId(request.getTaskId());
         task.setUsername(request.getUsername());
         task.setTaskName(request.getTaskName());
         task.setTaskDetail(request.getTaskDetail());
         task.setDuration(request.getDuration());
-        task.setStartTime(LocalDateTime.now());//(DateTimeFormatter.ofPattern("dd/MM/yyyy 'at' HH:mm:ss a").format(request.getStartTime()));
-        task.setStopTime(LocalDateTime.now());//(DateTimeFormatter.ofPattern("dd/MM/yyyy 'at' HH:mm:ss a").format(request.getStopTime()));
+//        task.setStartTime(LocalDateTime.parse(DateTimeFormatter.ofPattern("dd/MM/yyyy 'at' HH:mm:ss a").format(request.getStartTime())));
+//        task.setStopTime(LocalDateTime.parse(DateTimeFormatter.ofPattern("dd/MM/yyyy 'at' HH:mm:ss a").format(request.getStopTime())));
         return task;
     }
     public static CreateTaskResponse mapTaskResponse(Task task) {
         CreateTaskResponse response = new CreateTaskResponse();
-        response.setTaskId(response.getTaskId());
+        response.setTaskId(task.getTaskId());
         response.setTaskName(task.getTaskName());
         response.setUsername(task.getUsername());
         response.setTaskDetail(task.getTaskDetail());
         response.setStartTime(DateTimeFormatter.ofPattern("dd/MM/yyyy 'at' HH:mm:ss a").format(task.getStartTime()));
         response.setStopTime(DateTimeFormatter.ofPattern("dd/MM/yyyy 'at' HH:mm:ss a").format(task.getStopTime()));
-        response.setMessage("task created");
         return response;
-    }
-
-    public static CreateTaskResponse mapTaskEditedResponse(Task task) {
-        CreateTaskResponse taskResponse = new CreateTaskResponse();
-        taskResponse.setTaskId(taskResponse.getTaskId());
-        taskResponse.setTaskName(task.getTaskName());
-        taskResponse.setUsername(task.getUsername());
-        taskResponse.setTaskDetail(task.getTaskDetail());
-        taskResponse.setStartTime(DateTimeFormatter.ofPattern("dd/MM/yyyy 'at' HH:mm:ss a").format(task.getStartTime()));
-        taskResponse.setStopTime(DateTimeFormatter.ofPattern("dd/MM/yyyy 'at' HH:mm:ss a").format(task.getStopTime()));
-        taskResponse.setMessage("task edited");
-        return taskResponse;
     }
 
     public static void checkState(User user){

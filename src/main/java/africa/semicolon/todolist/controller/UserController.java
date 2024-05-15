@@ -10,10 +10,7 @@ import africa.semicolon.todolist.services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.CREATED;
@@ -37,7 +34,7 @@ public class UserController {
         }
     }
     @PostMapping("/login")
-    public ResponseEntity<?> signIn(@RequestBody LoginRequest request){
+    public ResponseEntity<?> login(@RequestBody LoginRequest request){
         try {
             var result = userService.login(request);
             return new ResponseEntity<>(new ApiResponse(true, result), CREATED);
@@ -45,7 +42,6 @@ public class UserController {
             return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), BAD_REQUEST);
         }
     }
-
     @PostMapping("/edit-task")
     public ResponseEntity<?> editTask(@RequestBody CreateTaskRequest request){
         try {
@@ -60,6 +56,42 @@ public class UserController {
         try {
             var result = taskService.findAllTask();
             return new ResponseEntity<>(new ApiResponse(true, result), CREATED);
+        }catch (TodoListException e){
+            return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), BAD_REQUEST);
+        }
+    }
+    @PostMapping("/create-task")
+    public ResponseEntity<?> createTask(@RequestBody CreateTaskRequest request){
+        try {
+            var result = taskService.createTask(request);
+            return new ResponseEntity<>(new ApiResponse(true, result), CREATED);
+        }catch (TodoListException exception){
+            return new ResponseEntity<>(new ApiResponse(false, exception.getMessage()), BAD_REQUEST);
+        }
+    }
+    @GetMapping("/find-task-by-username/{task-name}")
+    public ResponseEntity<?> findTaskByTaskName(@PathVariable("task-name") String taskName){
+        try {
+            var result = taskService.findTaskByTaskName(taskName);
+            return new ResponseEntity<>(new ApiResponse(true, result), CREATED);
+        }catch (TodoListException e){
+            return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), BAD_REQUEST);
+        }
+    }
+    @DeleteMapping("/delete-task/{task-id}")
+    public ResponseEntity<?> deleteTask(@PathVariable("task-id") String taskId){
+        try {
+            var result = taskService.deleteTask(taskId);
+            return new ResponseEntity<>(new ApiResponse(true, result), CREATED);
+        }catch (TodoListException exception){
+            return new ResponseEntity<>(new ApiResponse(false, exception.getMessage()), BAD_REQUEST);
+        }
+    }
+    @GetMapping("/find-by-username/{username}")
+    public ResponseEntity<?> findByUsername(@PathVariable("username") String username){
+        try {
+            var result = taskService.findListOfTaskByUsername(username);
+            return new  ResponseEntity<>(new ApiResponse(true, result), CREATED);
         }catch (TodoListException e){
             return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), BAD_REQUEST);
         }

@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public LoginResponse login(LoginRequest request) {
         checkUser(request.getUsername());
-        User foundUser = userRepository.findUserBy(request.getUsername());
+        User foundUser = userRepository.findUserByUsername(request.getUsername());
         if (isPasswordIncorrect(foundUser, request.getPassword())) {
             throw new PasswordOrUsernameNotCorrectException("username or password not correct");
         }
@@ -57,6 +57,16 @@ public class UserServiceImpl implements UserService {
             throw new UserNotFoundExcetion("user not found");
         }
     }
+
+    @Override
+    public Optional<User> findByUsername(String username) {
+        Optional<User> foundUser = Optional.ofNullable(userRepository.findUserByUsername(username));
+        if (foundUser.isEmpty()){
+            throw new UserNotFoundExcetion("user not found");
+        }
+        return foundUser;
+    }
+
     public void validateUser(String username){
         Optional<User> foundUser = userRepository.findByUsername(username);
         if (foundUser.isPresent()){

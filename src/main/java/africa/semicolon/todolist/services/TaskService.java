@@ -19,11 +19,19 @@ public interface TaskService {
 
     void validateTask(String taskId);
 
-    List<Task> findListOfTask(String username);
+    List<Task> findListOfTaskByUsername(String username);
 
     List<Task> findAllTask();
 
     Optional<Task> findTaskByTaskName(String taskName);
 
- DeleteResponse deleteTask(String taskId);
+    Task findTaskByTaskId(String taskId);
+
+    DeleteResponse deleteTask(String taskId);
+
+    Task findTaskByUsername(String username);
+
+    void assignTask(String taskId, String taskId1);
+
+    void shareTask(String taskId, String assigneeId);
 }

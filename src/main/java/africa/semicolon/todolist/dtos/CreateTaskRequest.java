@@ -1,5 +1,7 @@
 package africa.semicolon.todolist.dtos;
 
+import africa.semicolon.todolist.enum_classes.Priority;
+import africa.semicolon.todolist.enum_classes.Status;
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -12,8 +14,9 @@ public class CreateTaskRequest {
     private String username;
     private String taskName;
     private String taskDetail;
-    private String startTime;
-    private String stopTime;
     private String duration;
-    private String priority;
+    private Priority prioritiseTask;
+    private Status taskStatus;
+    private LocalDateTime startTime = LocalDateTime.now();
+    private LocalDateTime stopTime = LocalDateTime.now();
 }
